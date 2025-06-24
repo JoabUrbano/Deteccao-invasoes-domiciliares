@@ -2,7 +2,6 @@ import numpy as np
 import cv2
 import imutils
 from imutils.video import FPS
-import time
 from base64 import b64encode
 
 # construct the argument parse and parse the arguments
@@ -16,8 +15,6 @@ itemIdentificado = "person"
 camera = cv2.VideoCapture(video_source)
 
 # inicializar a lista de rótulos de classe que o MobileNet SSD foi treinado
-# para detectar e, em seguida, gerar um conjunto de cores de caixa delimitadora
-# para cada classe
 CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
            "bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
            "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
