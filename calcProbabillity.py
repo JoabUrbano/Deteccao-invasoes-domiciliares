@@ -1,26 +1,48 @@
 from timeEvaluation import TimeEvaluator
+from Bayes import BayesNet, enumeration_ask
+from controlGate import controlGate
 
 class CalcProbability:
     def __init__(self):
         self.time_evaluator = TimeEvaluator()
+        self.controlGate = controlGate()
+
+        self.rede = BayesNet([
+            ('Invasion', [], 0.02),
+            ('DetectionConfidenceHigh', ['Invasion'], {
+                (True,): 0.9,
+                (False,): 0.1  
+            }),
+            ('CriticalTime', ['Invasion'], {
+                (True,): 0.85,
+                (False,): 0.15
+            }),
+             ('ControlGate', ['Invasion'], {
+                (True,): 0.1,
+                (False,): 0.9
+            })
+        ])
 
     def calc_probability_invasion(self, confidence):
-        """
-        :param confidence: float entre 0 e 1 (ex: 0.85)
-        :param hour: opcional - hora da detecção para fins de teste
-        :return: probabilidade final de invasão
-        """
-
+        if  confidence >= 0.7:
+            confidence_high = True
+        else:
+            confidence_high = False
+        
         time_weight = self.time_evaluator.get_time_weight()
 
-        # Combinação de fatores (simplificada):
-        # A confiança é ponderada pelo peso do horário
-        probability = confidence * time_weight
+        if time_weight >= 0.7:
+            critical_time = True
+        else:
+            critical_time = False
 
-        # Ajuste de probabilidade para deixar mais realista
-        # Exemplo: aumentar sensibilidade em horários críticos
-        if time_weight >= 0.8 and confidence > 0.7:
-            probability += 0.1  # pequeno bônus de risco
+        controlActived = self.controlGate.returnStateControl()
 
-        # Garantir que o valor fique entre 0 e 1
-        return min(probability, 1.0)
+        evidence = {
+            'DetectionConfidenceHigh': confidence_high,
+            'CriticalTime': critical_time,
+            'ControlGate': controlActived
+        }
+
+        result = enumeration_ask('Invasion', evidence, self.rede)
+        return result[True]

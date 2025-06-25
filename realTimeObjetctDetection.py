@@ -9,7 +9,7 @@ from calcProbabillity import CalcProbability
 video_source = "./video/pessoavideo.mp4"
 prototxt_path = "./MobileNetSSD_deploy.prototxt.txt"
 model_path = "./MobileNetSSD_deploy.caffemodel"
-confidence_threshold = 0.2
+confidence_threshold = 0.22
 
 itemIdentificado = "person"
 

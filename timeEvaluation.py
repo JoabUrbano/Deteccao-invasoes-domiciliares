@@ -8,14 +8,12 @@ class TimeEvaluator:
 
         hour = datetime.now().hour
         
-        if 2 <= hour < 4:
-            return 1.0
-        elif 0 <= hour < 2 or 4 <= hour < 6:
-            return 0.8
-        elif 20 <= hour < 24:
+        if 22 <= hour <= 24 or 5 > hour >= 0:
+            return 0.9
+        elif 20 <= hour < 22:
             return 0.6
-        elif 6 <= hour < 8 or 18 <= hour < 20:
+        elif 5 <= hour < 8 or 18 <= hour < 20:
             return 0.4
         else:
-            return 0.2
+            return 0.1
 
