@@ -2,7 +2,8 @@ import numpy as np
 import cv2
 import imutils
 from imutils.video import FPS
-from base64 import b64encode
+
+from calcProbabillity import CalcProbability
 
 # construct the argument parse and parse the arguments
 video_source = "./video/pessoavideo.mp4"
@@ -11,6 +12,8 @@ model_path = "./MobileNetSSD_deploy.caffemodel"
 confidence_threshold = 0.2
 
 itemIdentificado = "person"
+
+prob_calc = CalcProbability()
 
 camera = cv2.VideoCapture(video_source)
 
@@ -57,6 +60,8 @@ while True:
                 y = startY - 15 if startY - 15 > 15 else startY + 15
                 cv2.putText(image, label, (startX, y),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
+                invasion_prob = prob_calc.calc_probability_invasion(confidence)
+                print(f"Probabilidade de invasão: {invasion_prob * 100:.2f}%")
 
         # Mostra a saída da imagem
         cv2.imshow("Frame", image)
