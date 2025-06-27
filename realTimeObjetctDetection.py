@@ -5,11 +5,18 @@ from imutils.video import FPS
 
 from calcProbabillity import CalcProbability
 
-# construct the argument parse and parse the arguments
+def difference(num1, num2):
+    difference = num1 - num2
+    if difference < 0:
+        difference = difference*(-1)
+    return difference
+
+
 video_source = "./video/pessoavideo.mp4"
 prototxt_path = "./MobileNetSSD_deploy.prototxt.txt"
 model_path = "./MobileNetSSD_deploy.caffemodel"
-confidence_threshold = 0.22
+confidence_threshold = 0.25
+last_confidence = 1
 
 itemIdentificado = "person"
 
@@ -60,10 +67,12 @@ while True:
                 y = startY - 15 if startY - 15 > 15 else startY + 15
                 cv2.putText(image, label, (startX, y),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
-                invasion_prob = prob_calc.calc_probability_invasion(confidence)
-                print(f"Probabilidade de invasão: {invasion_prob * 100:.2f}%")
+                if difference(confidence, last_confidence) > 0.1:
+                    last_confidence = confidence
+                    invasion_prob = prob_calc.calc_probability_invasion(confidence)
+                    print(f"Probabilidade de invasão: {invasion_prob * 100:.2f}%")
 
-        # Mostra a saída da imagem
+        # Saída da imagem
         cv2.imshow("Frame", image)
         key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):

@@ -1,5 +1,5 @@
 from timeEvaluation import TimeEvaluator
-from Bayes import BayesNet, enumeration_ask
+from bayes import BayesNet, enumeration_ask
 from controlGate import controlGate
 
 class CalcProbability:
