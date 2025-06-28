@@ -31,7 +31,6 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
            "sofa", "train", "tvmonitor"]
 COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 
-# carregue nosso modelo serializado do disco
 print("[INFO] loading model...")
 net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
 
@@ -69,8 +68,18 @@ while True:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
                 if difference(confidence, last_confidence) > 0.1:
                     last_confidence = confidence
-                    invasion_prob = prob_calc.calc_probability_invasion(confidence)
-                    print(f"Probabilidade de invasão: {invasion_prob * 100:.2f}%")
+                    invasion_prob = prob_calc.calc_probability_invasion(confidence) * 100
+                    print(f"Probabilidade de invasão: {invasion_prob:.2f}%")
+                    if invasion_prob < 40:
+                        print("Sem chance de invasão")
+                    elif invasion_prob >= 40 and invasion_prob < 55:
+                        print("Pouca chance de invasão")
+                    elif invasion_prob >= 55 and invasion_prob < 70:
+                        print("Chance média de invasão invasão")
+                    elif invasion_prob >= 70 and invasion_prob < 85:
+                        print("Alta chance de invasão invasão")
+                    else:
+                        print("Chance crítica de invasão invasão")
 
         # Saída da imagem
         cv2.imshow("Frame", image)

@@ -14,8 +14,8 @@ class CalcProbability:
                 (False,): 0.1  
             }),
             ('CriticalTime', ['Invasion'], {
-                (True,): 0.85,
-                (False,): 0.15
+                (True,): 0.9,
+                (False,): 0.1
             }),
              ('ControlGate', ['Invasion'], {
                 (True,): 0.1,
