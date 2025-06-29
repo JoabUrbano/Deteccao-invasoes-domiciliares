@@ -68,18 +68,7 @@ while True:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
                 if difference(confidence, last_confidence) > 0.1:
                     last_confidence = confidence
-                    invasion_prob = prob_calc.calc_probability_invasion(confidence) * 100
-                    print(f"Probabilidade de invasão: {invasion_prob:.2f}%")
-                    if invasion_prob < 40:
-                        print("Sem chance de invasão")
-                    elif invasion_prob >= 40 and invasion_prob < 55:
-                        print("Pouca chance de invasão")
-                    elif invasion_prob >= 55 and invasion_prob < 70:
-                        print("Chance média de invasão invasão")
-                    elif invasion_prob >= 70 and invasion_prob < 85:
-                        print("Alta chance de invasão invasão")
-                    else:
-                        print("Chance crítica de invasão invasão")
+                    prob_calc.calc_probability_invasion(confidence)
 
         # Saída da imagem
         cv2.imshow("Frame", image)
@@ -87,8 +76,8 @@ while True:
         if key == ord("q"):
             break
         fps.update()
-    except:
-        print("Vídeo acabou ou não foi possível exibi-lo!")
+    except Exception as e:
+        print(f"[ERRO] Falha ao processar vídeo: {e}")
         break
 
 # libera o uso da camera e fecha a janela aberta
