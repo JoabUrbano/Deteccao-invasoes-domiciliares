@@ -1,4 +1,4 @@
-class controlGate:
+class controllGate:
     def __init__(self):
         self.controlActived = False
     

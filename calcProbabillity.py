@@ -1,12 +1,12 @@
 from timeEvaluation import TimeEvaluator
 from bayes import BayesNet, enumeration_ask
-from controlGate import controlGate
+from controllGate import controllGate
 from markov import Markov
 
 class CalcProbability:
     def __init__(self):
         self.time_evaluator = TimeEvaluator()
-        self.controlGate = controlGate()
+        self.controlGate = controllGate()
 
         self.rede = BayesNet([
             ('Invasion', [], 0.02),
@@ -53,8 +53,9 @@ class CalcProbability:
 
         invasion_prob = result[True]*100
         if invasion_prob < 45:
-            print(f"Baixa chance de invasão {invasion_prob:.2f}%")
+            print(f"Chance com Bayes : Chance baixa de invasão {invasion_prob:.2f}%")
         elif invasion_prob >= 45 and invasion_prob < 65:
-            print(f"Média chance de invasão {invasion_prob:.2f}%")
+            print(f"Chance com Bayes : Chance média de invasão {invasion_prob:.2f}%")
         else:
-            print(f"Chance crítica de invasão invasão {invasion_prob:.2f}%")
+            print(f"Chance com Bayes : Chance alta de invasão invasão {invasion_prob:.2f}%")
+        print("-"*25)
