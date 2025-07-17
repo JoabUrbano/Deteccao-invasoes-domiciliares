@@ -18,11 +18,25 @@ Dependendo da hora, ela pode ser crítica, ou seja, grande probabilidade de inva
 
 O código também irá checar se a trava do portão está ativada ou desativada, o que também influencia no risco da invasão.
 
+Como entrada para a visão computacional, será utilizado um vídeo já gravado em que há uma pessoa se aproximando e diferentes fases de confiança na detecção.
+
 <h2>Metodologia 🛠️</h2>
 
 O projeto segue uma metodologia de desenvolvimento que inicia com o levantamento detalhado dos requisitos, incluindo funcionalidades específicas e com pesquisa sobre os assuntos.
 
 O trabalho foi inspirado no do Adrian Rosebrock sobre detecção de objetos com visão computacional utilizando OpenCv. Para realizar o cálculo da probabilidade de invasão foi utilizado  duas maneiras, redes bayesianas e cadeias de Markov, a seguir, será detalhado melhor o funcionamento.
+
+<h3>PAES 📲</h3>
+
+O agente é do tipo reativo símples. Nesse momento do projeto, ele vai tomas as decisões baseados no estado atual.
+
+**Performance:** Faz a detecção atutomática de invasões de maneira rápida e eficiente, ganhando um tempo precioso para a segurança dos residentes. 
+
+**Ambiente:** Um domicilio com uma cámera e verificação no portão.
+
+**Atuadores:** Alerta de invasão
+
+**Sensores:** Cameras, rélogio e sensor de trava do portão.
 
 <h3>Detecção 🔎</h3>
 
@@ -66,7 +80,11 @@ Com isso, torna-se interessante ter os dois algoritmos para comparação, visto 
 
 O sistema se mostrou interessante visto que os algoritmos tendem a ser mais conservadores, principalmente as redes bayesianas, fazendo com que as detecções realmente altas de invasão só ocorram com múltiplos fatores de risco bem estabelecidos, e evitando que a probabilidade de invasão tenha grande alteração quando levado em conta a união dos dois algoritmos.
 
+O desempenho para visão computacional pesa muito porque esse recurso é caro computacionalmente falando. Tendo isso em vista, foram feitas operações de otimização que tiveram um bom efeito, como colocar um threshold para não contar detecções com confiança abaixo de 25%, e para chamar apenas o cálculo de probabilidade se houver alguma diferença entre a confiança atual e a anterior. Isso proporcionou ganhos significativos em desempenho.
 
+<h3>O que poderia melhorar ⚒️</h3>
+
+Uma melhoria futura seria refinar o cálculo da probabilidade de Markov e fazer uma comparação mais direta entre os dois algoritmos para acionar o alarme quando os dois tiverem alguma certeza de que está havendo uma invasão.
 
 <h2>Como rodar 👨‍💻</h2>
 Basta ter o python 3 instalado em sua maquina, junto com as bibliotecas listadas.
